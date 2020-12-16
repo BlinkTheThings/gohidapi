@@ -8,9 +8,9 @@ CFLAGS=-I../hidapi/hidapi -g -c
 
 OBJS=../hidapi/windows/hid.o
 
-all: gohidapi
+all: hidtest
 
-gohidapi: libhidapi.a
+hidtest: libhidapi.a
 	go build -o ./build/ cmd/hidtest/hidtest.go 
 
 libhidapi.a: $(OBJS)
@@ -24,4 +24,4 @@ clean:
 	@rm -rf ./build
 	@rm -f $(OBJS) 
 
-.PHONY=all clean
+.PHONY: all clean
