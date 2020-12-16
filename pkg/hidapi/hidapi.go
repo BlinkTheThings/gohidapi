@@ -2,7 +2,9 @@ package hidapi
 
 /*
 #include "../../../hidapi/hidapi/hidapi.h"
-#cgo LDFLAGS: -L "../../build/" -lhidapi -lsetupapi
+#cgo LDFLAGS: -lhidapi
+#cgo windows LDFLAGS: -L "../../build/windows" -lsetupapi
+#cgo linux LDFLAGS: -L "../../build/linux" -ludev
 */
 import "C"
 

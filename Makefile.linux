@@ -1,0 +1,23 @@
+CFLAGS=-I../hidapi/hidapi -g -c
+
+OBJS=../hidapi/linux/hid.o
+
+BUILD=./build/linux/
+
+all: hidtest
+
+hidtest: libhidapi.a
+	go build -o $(BUILD) cmd/hidtest/hidtest.go 
+
+libhidapi.a: $(OBJS)
+	@mkdir -p $(BUILD)
+	$(AR) rcs $(BUILD)$@ $<
+
+$(OBJS): %.o: %.c
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	@rm -rf $(BUILD)
+	@rm -f $(OBJS) 
+
+.PHONY: all clean
