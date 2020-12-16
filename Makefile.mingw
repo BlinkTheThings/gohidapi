@@ -8,20 +8,22 @@ CFLAGS=-I../hidapi/hidapi -g -c
 
 OBJS=../hidapi/windows/hid.o
 
+BUILD=./build/windows/
+
 all: hidtest
 
 hidtest: libhidapi.a
-	go build -o ./build/ cmd/hidtest/hidtest.go 
+	go build -o $(BUILD) cmd/hidtest/hidtest.go
 
 libhidapi.a: $(OBJS)
-	@mkdir -p ./build/
-	$(AR) rcs ./build/$@ $<
+	@mkdir -p $(BUILD)
+	$(AR) rcs $(BUILD)$@ $<
 
 $(OBJS): %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	@rm -rf ./build
+	@rm -rf $(BUILD)
 	@rm -f $(OBJS) 
 
 .PHONY: all clean

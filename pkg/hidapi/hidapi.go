@@ -12,3 +12,10 @@ import "C"
 func VersionStr() string {
 	return C.GoString(C.hid_version_str())
 }
+
+// Version returns the major, minor, and patch version numbers of the hidapi library.
+func Version() (major int, minor int, patch int) {
+	v := C.hid_version()
+	major, minor, patch = int(v.major), int(v.minor), int(v.patch)
+	return
+}
