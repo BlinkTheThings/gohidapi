@@ -1,0 +1,27 @@
+export GOOS=windows
+export GOARCH=amd64
+export CGO_ENABLED=1
+export CC=x86_64-w64-mingw32-gcc
+
+AR=x86_64-w64-mingw32-ar
+CFLAGS=-I../hidapi/hidapi -g -c
+
+OBJS=../hidapi/windows/hid.o
+
+all: gohidapi
+
+gohidapi: libhidapi.a
+	go build -o ./build/ cmd/hidtest/hidtest.go 
+
+libhidapi.a: $(OBJS)
+	@mkdir -p ./build/
+	$(AR) rcs ./build/$@ $<
+
+$(OBJS): %.o: %.c
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	@rm -rf ./build
+	@rm -f $(OBJS) 
+
+.PHONY=all clean
